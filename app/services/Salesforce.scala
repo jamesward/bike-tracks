@@ -44,12 +44,12 @@ class Salesforce(implicit app: Application) {
     }
   }
 
-  def insertPing(ping: Ping): Future[JsValue] = {
-    ws(s"Ping__c").flatMap {
-      _.post(Json.toJson(ping)).flatMap { response =>
+  def updatePing(bikeRentalId: String, ping: Ping): Future[Unit] = {
+    ws(s"Rental_Bike__c/$bikeRentalId").flatMap {
+      _.patch(Json.toJson(ping)).flatMap { response =>
         response.status match {
-          case Status.CREATED =>
-            Future.successful(response.json)
+          case Status.NO_CONTENT =>
+            Future.successful(Unit)
           case _ =>
             Future.failed(new IllegalStateException(response.json.toString()))
         }

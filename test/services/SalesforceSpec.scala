@@ -10,12 +10,15 @@ import org.scalatestplus.play.{PlaySpec, OneAppPerSuite}
 class SalesforceSpec extends PlaySpec with OneAppPerSuite {
 
   "Salesforce" must {
-    "insert a ping" in {
-      val ping = Ping("asdf", Geolocation(-122.403405, 37.785143), DateTime.now())
+    "update the ping" in {
+      val ping = Ping(Geolocation(37.785143, -122.403405), DateTime.now())
 
-      val json = await(Salesforce(app).insertPing(ping))
-
-      (json \ "success").asOpt[Boolean] mustBe Some(true)
+      try {
+        await(Salesforce(app).updatePing("a00j00000041nvH", ping))
+      }
+      catch {
+        case e: Exception => fail("This should not fail")
+      }
     }
   }
 

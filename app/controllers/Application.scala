@@ -19,10 +19,10 @@ object Application extends Controller {
     } getOrElse {
       DateTime.now()
     }
-    val ping = Ping(bikeRentalId, geo, dateTime)
-    Salesforce(Play.current).insertPing(ping).map { r =>
-      Logger.info(r.toString())
-      Ok(r)
+    val ping = Ping(geo, dateTime)
+    Salesforce(Play.current).updatePing(bikeRentalId, ping).map { r =>
+      Logger.info(r.toString)
+      Ok
     }
   }
 
