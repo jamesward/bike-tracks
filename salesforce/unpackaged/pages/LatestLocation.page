@@ -1,0 +1,37 @@
+<apex:page standardController="Rental_Bike__c">
+    
+    <head>
+        <style type="text/css">
+          html { height: 100% }
+          body { height: 100%; margin: 0; padding: 0 }
+          #map-canvas { width:800px; height:400px; }
+        </style>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        
+        <script>
+            var lat = {!Rental_Bike__c.Ping_Location__Latitude__s};
+        	var lon = {!Rental_Bike__c.Ping_Location__Longitude__s};
+            function initialize() {
+                var mapOptions = {
+                    center: new google.maps.LatLng(lat, lon),
+                    zoom: 15
+                };
+            
+                var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+            
+                var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(lat, lon),
+                        map: map,
+                    	title: '{!Rental_Bike__c.Name}'
+                });
+            }
+            
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    </head>
+    
+    <body>
+      <div id="map-canvas"/>
+    </body>
+    
+</apex:page>
