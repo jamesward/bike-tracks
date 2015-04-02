@@ -11,8 +11,8 @@ libraryDependencies ++= Seq(
   "org.scalatestplus" %% "play" % "1.1.0" % "test"
 )
 
-username in Force := sys.env("SALESFORCE_USERNAME")
+username in Force := sys.env.get("SALESFORCE_USERNAME").getOrElse("")
 
-password in Force := sys.env("SALESFORCE_PASSWORD")
+password in Force := sys.env.get("SALESFORCE_PASSWORD").getOrElse("")
 
 unpackagedComponents in Force := Map("ApexClass" -> Seq("*"), "CustomTab" -> Seq("*"), "CustomObject" -> Seq("*"), "ApexPage" -> Seq("*"))
